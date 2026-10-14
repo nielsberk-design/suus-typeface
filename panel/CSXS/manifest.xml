@@ -6,11 +6,11 @@
 -->
 <ExtensionManifest Version="7.0"
                    ExtensionBundleId="com.nielsberk.suustypeface"
-                   ExtensionBundleVersion="0.0.1"
+                   ExtensionBundleVersion="0.2.0"
                    ExtensionBundleName="Suus Typeface"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ExtensionList>
-    <Extension Id="com.nielsberk.suustypeface.panel" Version="0.0.1" />
+    <Extension Id="com.nielsberk.suustypeface.panel" Version="0.2.0" />
   </ExtensionList>
 
   <ExecutionEnvironment>

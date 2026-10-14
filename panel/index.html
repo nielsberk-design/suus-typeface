@@ -13,6 +13,8 @@
       --border: #4b4b4b;
       --button: #454545;
       --button-hover: #505050;
+      --primary: #2d6fd0;
+      --primary-fg: #ffffff;
       --ok: #8cc68c;
       --error: #ff8a7a;
       --font: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -29,29 +31,49 @@
     }
 
     body {
-      padding: 12px;
+      padding: 10px 12px 12px;
     }
 
-    h1 {
-      margin: 0 0 2px;
+    * {
+      box-sizing: border-box;
+    }
+
+    textarea, input[type="number"], input[type="text"], select {
+      background: var(--field);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font: inherit;
+    }
+
+    textarea {
+      display: block;
+      width: 100%;
+      min-height: 64px;
+      padding: 6px 8px;
+      resize: vertical;
       font-size: 1.15em;
-      font-weight: 600;
     }
 
-    .hint {
-      margin: 0 0 12px;
-      color: var(--muted);
+    input[type="number"] {
+      width: 54px;
+      padding: 2px 4px;
+      text-align: right;
+    }
+
+    select {
+      padding: 2px 4px;
     }
 
     button {
-      width: 100%;
-      padding: 6px 10px;
+      padding: 5px 10px;
       border: 1px solid var(--border);
       border-radius: 3px;
       background: var(--button);
       color: var(--fg);
       font: inherit;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     button:hover {
@@ -63,20 +85,128 @@
       cursor: default;
     }
 
-    label {
+    button.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-fg);
+      font-weight: 600;
+    }
+
+    .row {
       display: flex;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 6px;
+    }
+
+    .row > * + * {
+      margin-left: 6px;
+    }
+
+    .grow {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .actions {
+      margin-top: 8px;
+    }
+
+    label.check {
+      display: flex;
+      align-items: center;
       color: var(--muted);
       cursor: pointer;
     }
 
-    label input {
+    label.check input {
       margin: 0 6px 0 0;
     }
 
+    details {
+      margin-top: 10px;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .field-label {
+      width: 84px;
+      flex: 0 0 auto;
+      color: var(--muted);
+    }
+
+    input[type="range"] {
+      flex: 1 1 auto;
+      min-width: 40px;
+      margin: 0;
+    }
+
+    .unit {
+      width: 14px;
+      color: var(--muted);
+    }
+
+    .segmented {
+      display: flex;
+    }
+
+    .segmented label {
+      flex: 1 1 0;
+      text-align: center;
+      padding: 3px 4px;
+      border: 1px solid var(--border);
+      background: var(--button);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .segmented label + label {
+      border-left: none;
+    }
+
+    .segmented label:first-child {
+      border-radius: 3px 0 0 3px;
+    }
+
+    .segmented label:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+
+    .segmented input {
+      display: none;
+    }
+
+    .segmented label.on {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--primary-fg);
+    }
+
+    input[type="color"] {
+      width: 32px;
+      height: 22px;
+      padding: 0;
+      border: 1px solid var(--border);
+      background: var(--field);
+    }
+
+    .lib-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
     .status {
-      margin-top: 12px;
+      margin-top: 10px;
       padding: 6px 8px;
       border-left: 3px solid var(--border);
       background: var(--field);
@@ -112,19 +242,121 @@
     }
 
     .footer {
-      margin-top: 12px;
+      margin-top: 10px;
       color: var(--muted);
       font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <h1>Suus Typeface</h1>
-  <p class="hint">Fase 0 &ndash; verbindingstest met Illustrator</p>
+  <textarea id="txt" placeholder="Typ hier je tekst&hellip;" spellcheck="false"></textarea>
 
-  <button id="btnHello" type="button">Test verbinding</button>
+  <div class="row actions">
+    <button id="btnRender" class="primary grow" type="button">Plaats</button>
+    <button id="btnNew" type="button" title="Volgende keer een nieuw blok plaatsen in plaats van het huidige bij te werken">Nieuw blok</button>
+  </div>
+  <div class="row">
+    <label class="check"><input id="chkLive" type="checkbox"> Live voorbeeld</label>
+  </div>
 
-  <label><input id="chkDebug" type="checkbox"> Debug-informatie tonen</label>
+  <details id="secLibrary">
+    <summary>Bibliotheek</summary>
+    <div class="row">
+      <span id="libName" class="lib-name grow"></span>
+    </div>
+    <div class="row">
+      <button id="btnChooseLib" type="button">Kies&hellip;</button>
+      <button id="btnDefaultLib" type="button">Standaard</button>
+      <button id="btnCheckLib" type="button">Controleer</button>
+    </div>
+    <div class="row">
+      <button id="btnTestLib" class="grow" type="button">Testbibliotheek maken</button>
+    </div>
+  </details>
+
+  <details id="secSettings" open>
+    <summary>Instellingen</summary>
+    <div class="row">
+      <span class="field-label">Grootte</span>
+      <input id="rngSize" type="range" min="10" max="400" step="1">
+      <input id="numSize" type="number" min="1" max="10000" step="1">
+      <span class="unit">%</span>
+    </div>
+    <div class="row">
+      <span class="field-label">Tracking</span>
+      <input id="rngTracking" type="range" min="-200" max="400" step="5">
+      <input id="numTracking" type="number" min="-1000" max="5000" step="5">
+      <span class="unit" title="duizendsten van de kapitaalhoogte">&permil;</span>
+    </div>
+    <div class="row">
+      <span class="field-label">Woordafstand</span>
+      <input id="rngWordspace" type="range" min="0" max="150" step="1">
+      <input id="numWordspace" type="number" min="0" max="1000" step="1">
+      <span class="unit" title="procent van de kapitaalhoogte">%</span>
+    </div>
+    <div class="row">
+      <span class="field-label">Regelafstand</span>
+      <input id="rngLeading" type="range" min="50" max="300" step="1">
+      <input id="numLeading" type="number" min="10" max="1000" step="1">
+      <span class="unit" title="procent van de kapitaalhoogte">%</span>
+    </div>
+    <div class="row">
+      <span class="field-label">Uitlijning</span>
+      <div class="segmented grow" data-name="align">
+        <label><input type="radio" name="align" value="left">Links</label>
+        <label><input type="radio" name="align" value="center">Midden</label>
+        <label><input type="radio" name="align" value="right">Rechts</label>
+      </div>
+    </div>
+    <div class="row">
+      <span class="field-label">Uitvoer</span>
+      <div class="segmented grow" data-name="mode">
+        <label title="Drie lagen: Type L1, Type L2, Type L3"><input type="radio" name="mode" value="layers">Per laag</label>
+        <label title="Per letter een groep met de drie delen"><input type="radio" name="mode" value="letters">Per letter</label>
+      </div>
+    </div>
+    <div class="row">
+      <span class="field-label">Varianten</span>
+      <select id="selVariants" class="grow">
+        <option value="random">Willekeurig</option>
+        <option value="cycle">Om de beurt</option>
+        <option value="first">Altijd variant 1</option>
+      </select>
+    </div>
+    <div class="row">
+      <span class="field-label">Seed</span>
+      <input id="numSeed" type="number" min="0" max="2147483646" step="1" style="width: 90px">
+      <button id="btnSeed" type="button" title="Andere willekeurige varianten">Nieuwe seed</button>
+    </div>
+  </details>
+
+  <details id="secColors">
+    <summary>Kleuren</summary>
+    <div class="row">
+      <label class="check"><input id="chkPalette" type="checkbox"> Eigen kleuren gebruiken</label>
+    </div>
+    <div class="row">
+      <span class="field-label">L1 schaduw</span>
+      <input id="colC1" type="color">
+    </div>
+    <div class="row">
+      <span class="field-label">L2 vulling</span>
+      <input id="colC2" type="color">
+    </div>
+    <div class="row">
+      <span class="field-label">L3 highlight</span>
+      <input id="colC3" type="color">
+    </div>
+    <div class="row muted">Uit = de kleuren uit de bibliotheek blijven staan.</div>
+  </details>
+
+  <details id="secDebug">
+    <summary>Hulp bij problemen</summary>
+    <div class="row">
+      <button id="btnHello" type="button">Test verbinding</button>
+      <label class="check"><input id="chkDebug" type="checkbox"> Debug-informatie tonen</label>
+    </div>
+  </details>
 
   <div id="status" class="status">Bezig met laden&hellip;</div>
   <pre id="log"></pre>

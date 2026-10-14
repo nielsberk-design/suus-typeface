@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <title>Suus Typeface</title>
+  <style>
+    /* Dark defaults; main.js overrides these from the Illustrator theme. */
+    :root {
+      --bg: #323232;
+      --fg: #dcdcdc;
+      --muted: #9a9a9a;
+      --field: #262626;
+      --border: #4b4b4b;
+      --button: #454545;
+      --button-hover: #505050;
+      --ok: #8cc68c;
+      --error: #ff8a7a;
+      --font: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif;
+      --font-size: 12px;
+    }
+
+    html, body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: var(--font-size);
+      line-height: 1.4;
+    }
+
+    body {
+      padding: 12px;
+    }
+
+    h1 {
+      margin: 0 0 2px;
+      font-size: 1.15em;
+      font-weight: 600;
+    }
+
+    .hint {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    button {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--button);
+      color: var(--fg);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--button-hover);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    label input {
+      margin: 0 6px 0 0;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 6px 8px;
+      border-left: 3px solid var(--border);
+      background: var(--field);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .status.ok {
+      border-left-color: var(--ok);
+    }
+
+    .status.error {
+      border-left-color: var(--error);
+      color: var(--error);
+    }
+
+    #log {
+      display: none;
+      margin: 8px 0 0;
+      padding: 6px 8px;
+      max-height: 240px;
+      overflow: auto;
+      background: var(--field);
+      color: var(--muted);
+      font-family: Menlo, Consolas, monospace;
+      font-size: 10px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    body.debug #log {
+      display: block;
+    }
+
+    .footer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Suus Typeface</h1>
+  <p class="hint">Fase 0 &ndash; verbindingstest met Illustrator</p>
+
+  <button id="btnHello" type="button">Test verbinding</button>
+
+  <label><input id="chkDebug" type="checkbox"> Debug-informatie tonen</label>
+
+  <div id="status" class="status">Bezig met laden&hellip;</div>
+  <pre id="log"></pre>
+
+  <div id="footer" class="footer"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

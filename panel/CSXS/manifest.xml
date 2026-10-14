@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  CEP manifest for the Suus Typeface panel.
+  The host range is deliberately wide. CSXS 9 is a minimum, so CEP 9 to 12
+  all accept it; in practice that means Illustrator CC 2019 (v23) or newer.
+-->
+<ExtensionManifest Version="7.0"
+                   ExtensionBundleId="com.nielsberk.suustypeface"
+                   ExtensionBundleVersion="0.0.1"
+                   ExtensionBundleName="Suus Typeface"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ExtensionList>
+    <Extension Id="com.nielsberk.suustypeface.panel" Version="0.0.1" />
+  </ExtensionList>
+
+  <ExecutionEnvironment>
+    <HostList>
+      <Host Name="ILST" Version="[19.0,99.9]" />
+    </HostList>
+    <LocaleList>
+      <Locale Code="All" />
+    </LocaleList>
+    <RequiredRuntimeList>
+      <RequiredRuntime Name="CSXS" Version="9.0" />
+    </RequiredRuntimeList>
+  </ExecutionEnvironment>
+
+  <DispatchInfoList>
+    <Extension Id="com.nielsberk.suustypeface.panel">
+      <DispatchInfo>
+        <Resources>
+          <MainPath>./index.html</MainPath>
+          <ScriptPath>./host/index.jsx</ScriptPath>
+        </Resources>
+        <Lifecycle>
+          <AutoVisible>true</AutoVisible>
+        </Lifecycle>
+        <UI>
+          <Type>Panel</Type>
+          <Menu>Suus Typeface</Menu>
+          <Geometry>
+            <Size>
+              <Height>520</Height>
+              <Width>320</Width>
+            </Size>
+            <MinSize>
+              <Height>200</Height>
+              <Width>240</Width>
+            </MinSize>
+            <MaxSize>
+              <Height>2000</Height>
+              <Width>1000</Width>
+            </MaxSize>
+          </Geometry>
+        </UI>
+      </DispatchInfo>
+    </Extension>
+  </DispatchInfoList>
+</ExtensionManifest>
